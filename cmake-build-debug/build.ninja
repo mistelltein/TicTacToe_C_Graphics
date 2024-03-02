@@ -55,18 +55,6 @@ build CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToe.cpp.obj: CXX_COMPILER__TicTa
   OBJECT_DIR = CMakeFiles\TicTacToe_C_Graphics.dir
   OBJECT_FILE_DIR = CMakeFiles\TicTacToe_C_Graphics.dir
 
-build CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToeLogic.cpp.obj: CXX_COMPILER__TicTacToe_C_Graphics_unscanned_Debug C$:/Users/user/JetBrainsProjects/CLionProjects/TicTacToe-C-Graphics/TicTacToeLogic.cpp || cmake_object_order_depends_target_TicTacToe_C_Graphics
-  DEP_FILE = CMakeFiles\TicTacToe_C_Graphics.dir\TicTacToeLogic.cpp.obj.d
-  FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\TicTacToe_C_Graphics.dir
-  OBJECT_FILE_DIR = CMakeFiles\TicTacToe_C_Graphics.dir
-
-build CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToeGraphics.cpp.obj: CXX_COMPILER__TicTacToe_C_Graphics_unscanned_Debug C$:/Users/user/JetBrainsProjects/CLionProjects/TicTacToe-C-Graphics/TicTacToeGraphics.cpp || cmake_object_order_depends_target_TicTacToe_C_Graphics
-  DEP_FILE = CMakeFiles\TicTacToe_C_Graphics.dir\TicTacToeGraphics.cpp.obj.d
-  FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\TicTacToe_C_Graphics.dir
-  OBJECT_FILE_DIR = CMakeFiles\TicTacToe_C_Graphics.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target TicTacToe_C_Graphics
@@ -75,7 +63,7 @@ build CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToeGraphics.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable TicTacToe_C_Graphics.exe
 
-build TicTacToe_C_Graphics.exe: CXX_EXECUTABLE_LINKER__TicTacToe_C_Graphics_Debug CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToe.cpp.obj CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToeLogic.cpp.obj CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToeGraphics.cpp.obj | C$:/MinGW/lib/libbgi.a
+build TicTacToe_C_Graphics.exe: CXX_EXECUTABLE_LINKER__TicTacToe_C_Graphics_Debug CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToe.cpp.obj | C$:/MinGW/lib/libbgi.a
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32  -luser32  -lgdi32  -lwinspool  -lshell32  -lole32  -loleaut32  -luuid  -lcomdlg32  -ladvapi32  C:/MinGW/lib/libbgi.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\TicTacToe_C_Graphics.dir

@@ -6,7 +6,25 @@ const int BOARD_SIZE = 3;
 int board[BOARD_SIZE][BOARD_SIZE] = { {2,2,2},{2,2,2},{2,2,2} };
 int copyArray[BOARD_SIZE][BOARD_SIZE] = { {2,2,2},{2,2,2},{2,2,2} };
 
-int evaluateBoard(int temp[BOARD_SIZE][BOARD_SIZE]);
+struct node
+{
+    int row;
+    int col;
+    int score;
+}bestMove, currentMove;
+
+struct GameAccount
+{
+    int points;
+    char mode;
+    char player1Name[50];
+    char player2Name[50];
+    int numberOfPlays;
+    int player1Wins;
+    int player2Wins;
+    int draws;
+} game;
+
 int countEmptyCells();
 int minimaxMoveEvaluation(int l, int c);
 void makeMoveAI();
@@ -29,5 +47,6 @@ void singlePlayerGame();
 void playAgainMenuDouble();
 void doublePlayerGame();
 void initializeGame(int players, char mode, char player1Name[50], char player2Name[50]);
+void gameplay();
 
 #endif

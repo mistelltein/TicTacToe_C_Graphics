@@ -1,3 +1,8 @@
 # ninja log v5
 4	878	7310816127346003	CMakeFiles/TicTacToe_C_Graphics.dir/main.cpp.obj	be925b7cf1bbfba2
 879	1145	7310816129946342	TicTacToe_C_Graphics.exe	fbef245dd5fd7508
+1	501	7310850342049430	CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToeLogic.cpp.obj	5b2e8fb401f633b
+13	491	7310849606003740	CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToeGraphics.cpp.obj	db36c177f62388d8
+6	112	7310850338147283	CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToe.cpp.obj	3ef41d9c2eb25e91
+0	488	7310852562499292	CMakeFiles/TicTacToe_C_Graphics.dir/TicTacToe.cpp.obj	3ef41d9c2eb25e91
+490	651	7310852564060518	TicTacToe_C_Graphics.exe	27072a07f80102aa
