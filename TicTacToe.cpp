@@ -5,7 +5,6 @@
 #include<time.h>
 #include"TicTacToe.h"
 
-
 int evaluateBoard(int temp[BOARD_SIZE][BOARD_SIZE])
 {
     int i;
@@ -123,28 +122,38 @@ void makeMoveAI()
         {
             if (board[i][j] == 2)
             {
-                if (rand() % 100 < 100)
-                {
+                int randomNumber = rand() % 100;
+
+                if (botDifficulty == 0) {
+                    if (randomNumber < 100) {
+                        board[i][j] = 1;
+                        return;
+                    }
+                }
+                else if(botDifficulty == 1){
+                    if (randomNumber < 50)
+                    {
+                        board[i][j] = 1;
+                        return;
+                    }
+                }
+                else{
                     board[i][j] = 1;
-                    return;
+                    currentMove.row = i;
+                    currentMove.col = j;
+                    currentMove.score = minimaxMoveEvaluation(emptyCellCount - 1, 0);
+
+                    if (currentMove.score > bestMove.score && !isFirstIteration)
+                    {
+                        bestMove = currentMove;
+                    }
+
+                    if (isFirstIteration)
+                    {
+                        bestMove = currentMove;
+                        isFirstIteration = 0;
+                    }
                 }
-
-                board[i][j] = 1;
-                currentMove.row = i;
-                currentMove.col = j;
-                currentMove.score = minimaxMoveEvaluation(emptyCellCount - 1, 0);
-
-                if (currentMove.score > bestMove.score && !isFirstIteration)
-                {
-                    bestMove = currentMove;
-                }
-
-                if (isFirstIteration)
-                {
-                    bestMove = currentMove;
-                    isFirstIteration = 0;
-                }
-
                 board[i][j] = 2;
             }
         }
@@ -560,38 +569,87 @@ int checkButtonClick(int x, int y, int mouseX, int mouseY) {
     }
 }
 
-void gameplay(){
+void drawBoundaries() {
+    setcolor(8);
+    line(10, 10, 10, INTERFACE_SIZE);
+    line(INTERFACE_SIZE + 10, 10, INTERFACE_SIZE + 10, INTERFACE_SIZE);
+    line(10, 10, INTERFACE_SIZE + 10, 10);
+    line(10, INTERFACE_SIZE, INTERFACE_SIZE + 10, INTERFACE_SIZE);
+}
+
+void drawTitle(char* text, int size, int x, int y) {
+    settextjustify(1, 2);
+    settextstyle(3, 0, size);
+    outtextxy(x, y, text);
+}
+
+void drawAdditionalText(char* text, int size, int x, int y) {
+    settextstyle(3, 0, size);
+    outtextxy(x, y, text);
+}
+
+void drawMadeByText(char* text, int size, int x, int y) {
+    settextjustify(1, 2);
+    settextstyle(3, 0, size);
+    outtextxy(x, y, text);
+}
+
+void handleButtonClick(int mouseX, int mouseY, int& choice) {
+    if (checkButtonClick(250, 140, mouseX, mouseY)) {
+        choice = 1;
+    } else if (checkButtonClick(250, 190, mouseX, mouseY)) {
+        choice = 2;
+    } else if (checkButtonClick(250, 240, mouseX, mouseY)) {
+        choice = 3;
+    }
+}
+
+void drawSelectDifficulty() {
+    cleardevice();
+    drawBoundaries();
+
+    drawTitle(titleText, 4, INTERFACE_SIZE / 2 + 10, 15);
+    drawAdditionalText(additionalText, 2, INTERFACE_SIZE / 2 + 15, 45);
+
+    drawMadeByText(madeByText, 3, INTERFACE_SIZE - 70, INTERFACE_SIZE / 2 + 90);
+
+    drawButton(250, 140, easyModeText);
+    drawButton(250, 190, mediumModeText);
+    drawButton(250, 240, hardModeText);
+
+    int choice = 0;
+
+    while (1) {
+        if (ismouseclick(WM_LBUTTONDOWN)) {
+            int mouseX, mouseY;
+            getmouseclick(WM_LBUTTONDOWN, mouseX, mouseY);
+            handleButtonClick(mouseX, mouseY, choice);
+            clearmouseclick(WM_LBUTTONDOWN);
+        }
+
+        if (choice != 0) {
+            botDifficulty = choice - 1;
+            closegraph();
+            singlePlayerGame();
+            break;
+        }
+    }
+    delay(5000);
+    closegraph();
+}
+
+void drawGameplayMenu() {
     initwindow(800, 700);
     cleardevice();
+    drawBoundaries();
 
-    setcolor(8);
+    drawTitle(titleText, 4, INTERFACE_SIZE / 2 + 10, 15);
+    drawAdditionalText(additionalText, 2, INTERFACE_SIZE / 2 + 15, 45);
 
-    // Drawing the boundaries of the field
-    const int INTERFACE_SIZE  = 650;
-    line(10, 10, 10, INTERFACE_SIZE);
-    line(INTERFACE_SIZE  + 10, 10, INTERFACE_SIZE  + 10, INTERFACE_SIZE);
-    line(10, 10, INTERFACE_SIZE  + 10, 10);
-    line(10, INTERFACE_SIZE , INTERFACE_SIZE  + 10, INTERFACE_SIZE );
-
-    // Setting the text style and displaying the title
-    char mainText[15] = "TIC TAC TOE";
-    settextjustify(1, 2);
-    settextstyle(3, 0, 4);
-    outtextxy(INTERFACE_SIZE  / 2 + 10, 15, mainText);
-
-    // Displaying additional text
-    char additionalText[30] = "Implemented using graphics.h";
-    settextstyle(3, 0, 2);
-    outtextxy(INTERFACE_SIZE  / 2 + 15, 45, additionalText);
-
-    char madeByText[20] = "Made By: Beka", singleModeText[15] = "Single Player",
-            multiplayerModeText[12] = "Multiplayer", exitText[5] = "Exit";
-    settextjustify(1, 2);
-    settextstyle(3, 0, 3);
-    outtextxy(INTERFACE_SIZE - 70, INTERFACE_SIZE / 2 + 90, madeByText);
+    drawMadeByText(madeByText, 3, INTERFACE_SIZE - 70, INTERFACE_SIZE / 2 + 90);
 
     drawButton(250, 140, singleModeText);
-    drawButton(250, 190, multiplayerModeText);
+    drawButton(250, 190, multiplayerText);
     drawButton(250, 240, exitText);
 
     int choice = 0;
@@ -600,23 +658,14 @@ void gameplay(){
         if (ismouseclick(WM_LBUTTONDOWN)) {
             int mouseX, mouseY;
             getmouseclick(WM_LBUTTONDOWN, mouseX, mouseY);
-
-            if (checkButtonClick(250, 140, mouseX, mouseY)) {
-                choice = 1;
-            } else if (checkButtonClick(250, 190, mouseX, mouseY)) {
-                choice = 2;
-            } else if (checkButtonClick(250, 240, mouseX, mouseY)) {
-                choice = 3;
-            }
-
+            handleButtonClick(mouseX, mouseY, choice);
             clearmouseclick(WM_LBUTTONDOWN);
         }
 
         if (choice != 0) {
             switch (choice) {
                 case 1:
-                    closegraph();
-                    singlePlayerGame();
+                    drawSelectDifficulty();
                     break;
                 case 2:
                     closegraph();
@@ -628,7 +677,6 @@ void gameplay(){
             }
             break;
         }
-
     }
     delay(5000);
     closegraph();
@@ -747,7 +795,7 @@ void doublePlayerGame() {
             break;
         default:
             printf("Wrong Choice");
-            gameplay();
+            drawGameplayMenu();
             break;
     }
 
@@ -768,7 +816,7 @@ void initializeGame(int players, char mode, char player1Name[50], char player2Na
 
 int main()
 {
-    gameplay();
+    drawGameplayMenu();
 
     return 0;
 }

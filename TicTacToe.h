@@ -7,11 +7,17 @@
 #define YEAH_BUTTON_Y 190
 #define NAH_BUTTON_Y 240
 
+const int INTERFACE_SIZE = 650;
 const int BOARD_SIZE = 3;
 int botDifficulty;
 
 int board[BOARD_SIZE][BOARD_SIZE] = { {2,2,2},{2,2,2},{2,2,2} };
 int copyArray[BOARD_SIZE][BOARD_SIZE] = { {2,2,2},{2,2,2},{2,2,2} };
+
+char titleText[15] = "TIC TAC TOE", additionalText[30] = "Implemented using graphics.h",
+        madeByText[15] = "Made by: Beka", easyModeText[10] = "Easy mode", mediumModeText[15] = "Medium mode",
+        hardModeText[10] = "Hard mode", singleModeText[15] = "Single Player", multiplayerText[15] = "Multiplayer",
+        exitText[5] = "Exit";
 
 struct node
 {
