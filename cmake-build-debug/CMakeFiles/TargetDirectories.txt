@@ -1,0 +1,3 @@
+C:/Users/user/JetBrainsProjects/CLionProjects/TicTacToe-C-Graphics/cmake-build-debug/CMakeFiles/TicTacToe_C_Graphics.dir
+C:/Users/user/JetBrainsProjects/CLionProjects/TicTacToe-C-Graphics/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/user/JetBrainsProjects/CLionProjects/TicTacToe-C-Graphics/cmake-build-debug/CMakeFiles/rebuild_cache.dir
