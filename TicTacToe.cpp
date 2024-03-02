@@ -636,48 +636,73 @@ void gameplay(){
 
 void drawButtonPlay(int x, int y, char* label) {
     setcolor(15);
-    rectangle(x, y, x + 150, y + 40);
-    outtextxy(x + 75, y + 5, label);
+    rectangle(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT);
+    outtextxy(x + BUTTON_WIDTH / 2, y + 5, label);
 }
 
-void playAgainMenuSingle(){
+void drawPlayAgain() {
     cleardevice();
     char playAgainText[30] = "Do you want to play again?", yeahText[5] = "Yeah", nahText[4] = "Nah";
     outtextxy(370, 140, playAgainText);
-    drawButtonPlay(270, 190, yeahText);
-    drawButtonPlay(270, 240, nahText);
+    drawButtonPlay(PLAY_AGAIN_X, YEAH_BUTTON_Y, yeahText);
+    drawButtonPlay(PLAY_AGAIN_X, NAH_BUTTON_Y, nahText);
+}
 
-    int choice = 0;
-    while(1){
-        if (ismouseclick(WM_LBUTTONDOWN)) {
-            int mouseX, mouseY;
-            getmouseclick(WM_LBUTTONDOWN, mouseX, mouseY);
+int getMouseClickChoice(int yeahButtonY, int nahButtonY) {
+    if (ismouseclick(WM_LBUTTONDOWN)) {
+        int mouseX, mouseY;
+        getmouseclick(WM_LBUTTONDOWN, mouseX, mouseY);
 
-            if (checkButtonClick(270, 240, mouseX, mouseY)) {
-                choice = 2;
-            } else if (checkButtonClick(270, 190, mouseX, mouseY)) {
-                choice = 1;
-            }
-
-            clearmouseclick(WM_LBUTTONDOWN);
+        if (checkButtonClick(PLAY_AGAIN_X, nahButtonY, mouseX, mouseY)) {
+            return 2;
+        } else if (checkButtonClick(PLAY_AGAIN_X, yeahButtonY, mouseX, mouseY)) {
+            return 1;
         }
 
+        clearmouseclick(WM_LBUTTONDOWN);
+    }
+
+    return 0;
+}
+
+void handleSinglePlayerChoice(int choice) {
+    switch (choice) {
+        case 1:
+            closegraph();
+            singlePlayerGame();
+            break;
+        case 2:
+            drawFinalMessage();
+            break;
+    }
+}
+
+void handleDoublePlayerChoice(int choice) {
+    switch (choice) {
+        case 1:
+            closegraph();
+            doublePlayerGame();
+            break;
+        case 2:
+            drawFinalMessage();
+            break;
+    }
+}
+
+void playAgainMenu(int yeahButtonY, int nahButtonY, void (*handleChoice)(int)) {
+    drawPlayAgain();
+
+    int choice = 0;
+    while (1) {
+        choice = getMouseClickChoice(yeahButtonY, nahButtonY);
+
         if (choice != 0) {
-            switch (choice) {
-                case 1:
-                    closegraph();
-                    singlePlayerGame();
-                    break;
-                case 2:
-                    drawFinalMessage();
-                    break;
-            }
+            handleChoice(choice);
         }
     }
 }
 
-void singlePlayerGame()
-{
+void singlePlayerGame() {
     srand(time(NULL));
     char playerName[50] = "Player#1";
 
@@ -685,8 +710,7 @@ void singlePlayerGame()
     char markChoice = (char)(randomNum + '0'),
             computerName[10] = "Computer";
 
-    switch (markChoice)
-    {
+    switch (markChoice) {
         case '1':
             initializeGame(1, 'o', playerName, computerName);
             gameStart(1, 'o', playerName, computerName);
@@ -700,47 +724,10 @@ void singlePlayerGame()
             break;
     }
 
-    playAgainMenuSingle();
+    playAgainMenu(YEAH_BUTTON_Y, NAH_BUTTON_Y, handleSinglePlayerChoice);
 }
 
-void playAgainMenuDouble(){
-    cleardevice();
-    char playAgainText[30] = "Do you want to play again?", yeahText[5] = "Yeah", nahText[4] = "Nah";
-    outtextxy(370, 140, playAgainText);
-    drawButtonPlay(270, 190, yeahText);
-    drawButtonPlay(270, 240, nahText);
-
-    int choice = 0;
-    while(1){
-        if (ismouseclick(WM_LBUTTONDOWN)) {
-            int mouseX, mouseY;
-            getmouseclick(WM_LBUTTONDOWN, mouseX, mouseY);
-
-            if (checkButtonClick(270, 240, mouseX, mouseY)) {
-                choice = 1;
-            } else if (checkButtonClick(270, 190, mouseX, mouseY)) {
-                choice = 2;
-            }
-
-            clearmouseclick(WM_LBUTTONDOWN);
-        }
-
-        if (choice != 0) {
-            switch (choice) {
-                case 1:
-                    closegraph();
-                    doublePlayerGame();
-                    break;
-                case 2:
-                    drawFinalMessage();
-                    break;
-            }
-        }
-    }
-}
-
-void doublePlayerGame()
-{
+void doublePlayerGame() {
     srand(time(NULL));
 
     char player1Name[10] = "Player#1";
@@ -749,8 +736,7 @@ void doublePlayerGame()
     int randomNum = rand() % 2 + 1;
     char markChoice = (char)(randomNum + '0');
 
-    switch (markChoice)
-    {
+    switch (markChoice) {
         case '1':
             initializeGame(2, 'o', player1Name, player2Name);
             gameStart(2, 'o', player1Name, player2Name);
@@ -765,7 +751,7 @@ void doublePlayerGame()
             break;
     }
 
-    playAgainMenuDouble();
+    playAgainMenu(YEAH_BUTTON_Y, NAH_BUTTON_Y, handleDoublePlayerChoice);
 }
 
 void initializeGame(int players, char mode, char player1Name[50], char player2Name[50])

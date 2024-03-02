@@ -1,7 +1,14 @@
 #ifndef TICTACTOE_C_GRAPHICS_TICTACTOE_H
 #define TICTACTOE_C_GRAPHICS_TICTACTOE_H
 
+#define BUTTON_WIDTH 150
+#define BUTTON_HEIGHT 40
+#define PLAY_AGAIN_X 270
+#define YEAH_BUTTON_Y 190
+#define NAH_BUTTON_Y 240
+
 const int BOARD_SIZE = 3;
+int botDifficulty;
 
 int board[BOARD_SIZE][BOARD_SIZE] = { {2,2,2},{2,2,2},{2,2,2} };
 int copyArray[BOARD_SIZE][BOARD_SIZE] = { {2,2,2},{2,2,2},{2,2,2} };
